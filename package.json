@@ -1,0 +1,27 @@
+{
+  "name": "watching-yet-services",
+  "version": "1.0.0",
+  "description": "Backend API Written in Express.ts to support the WatchingYet social media network",
+  "license": "ISC",
+  "author": "David Michael Ames Jr.",
+  "type": "Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.6.0",
+    "@prisma/client": "^6.19.2",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.0",
+    "@types/pg": "^8.20.0",
+    "prisma": "^6.19.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.2"
+  }
+}
