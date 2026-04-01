@@ -3,6 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 // Routes
 import authRoutes from './routes/auth.routes';
+import { authenticate } from './middleware/auth.middleware';
 
 dotenv.config();
 
