@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 // Routes
 import authRoutes from './routes/auth.routes';
 import watchRoutes from './routes/watch.routes';
+import feedRoutes from './routes/feed.routes';
 
 
 // Middleware
@@ -16,6 +17,7 @@ const app = express();
 app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/watch', watchRoutes);
+app.use('/feed', feedRoutes);
 
 app.get('/', (req, res) => {
   res.send('Watching Yet API is running 🚀');
