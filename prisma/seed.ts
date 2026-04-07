@@ -7,6 +7,15 @@ const SALT_ROUNDS = 1
 
 const prisma = new PrismaClient();
 
+type SeedUser = {
+  id?: string
+  username: string
+  email: string
+  passwordHash: string
+  bio?: string
+  avatarUrl?: string
+}
+
 async function main() {
   const filePath = path.join(process.cwd(), 'prisma', 'seedData', 'social_seed_data.json');
   const rawData = fs.readFileSync(filePath, 'utf-8');
@@ -27,7 +36,9 @@ async function main() {
   // 1. Users
   if (data.User?.length) {
     await prisma.user.createMany({
-      data: {...data.User, passwordHash: bcrypt.hashSync(data.User.passwordHash, SALT_ROUNDS)},
+      data: data.User.map((user: SeedUser) => {
+        return {...user, passwordHash: bcrypt.hashSync(user.passwordHash, SALT_ROUNDS)}
+      }),
       skipDuplicates: true,
     });
     console.log(`✅ Seeded ${data.User.length} users`);
