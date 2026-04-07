@@ -1,41 +1,61 @@
 import { prisma } from '../lib/prisma';
 
 export const getFeed = async (userId: string, cursor?: string) => {
-    const PAGE_SIZE=10;
+    const PAGE_SIZE = 10;
 
-    // Get IDs of users you're watching
-    const watching = await prisma.watch.findMany({
-        where: { watcherId: userId},
-        select: { watchingId: true}
-    });
-
-    const watchingIds = watching.map(w => w.watchingId);
-
-    // Include your own posts too
-    watchingIds.push(userId);
-
-    // Fetch posts
     const posts = await prisma.post.findMany({
         where: {
-            authorId: {
-                in: watchingIds
+            OR: [
+            { authorId: userId },
+            {
+                author: {
+                watchers: {
+                    some: {
+                    watcherId: userId,
+                    },
+                },
+                },
             },
+            ],
         },
         take: PAGE_SIZE,
         skip: cursor ? 1 : 0,
-        cursor: cursor ? { id: cursor} : undefined,
-        orderBy: {
-            createdAt: 'desc'
-        },
-        include: {
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: [
+            { createdAt: 'desc' },
+            { id: 'desc' },
+        ],
+        select: {
+            id: true,
+            content: true,
+            mediaUrl: true,
+            mediaType: true,
+            createdAt: true,
+
             author: {
                 select: {
-                    id: true,
-                    username: true,
-                    avatarUrl: true,
+                id: true,
+                username: true,
+                avatarUrl: true,
+
+                watchers: {
+                    where: {
+                    watcherId: userId,
+                    },
+                    select: { id: true },
+                },
                 },
             },
-             _count: {
+
+            reactions: {
+                where: {
+                userId,
+                type: 'LIKE',
+                },
+                select: { id: true },
+            },
+
+            _count: {
                 select: {
                 reactions: true,
                 comments: true,
@@ -44,13 +64,22 @@ export const getFeed = async (userId: string, cursor?: string) => {
         },
     });
 
-    // Increment cursor
-    const nextCursor = posts.length == PAGE_SIZE
-        ? posts[posts.length - 1].id
-        : null;
-    
+    const nextCursor = posts.length === PAGE_SIZE ? posts[posts.length - 1].id : null;
+
+    const transformedPosts = posts.map(post => ({
+        ...post,
+        viewerHasLiked: post.reactions.length > 0,
+        author: {
+            ...post.author,
+            viewerIsWatching: post.author.watchers.length > 0,
+        },
+        // clean up raw arrays
+        reactions: undefined,
+        authorWatchers: undefined,
+    }));
+
     return {
-        posts,
-        nextCursor
-    }
-}
+        posts: transformedPosts,
+        nextCursor,
+    };
+};
