@@ -1,16 +1,15 @@
 // Libraries
+import 'dotenv/config';  // Must be FIRST
 import express from 'express';
-import dotenv from 'dotenv';
 // Routes
-import authRoutes from './routes/auth.routes';
-import watchRoutes from './routes/watch.routes';
-import feedRoutes from './routes/feed.routes';
+import authRoutes from './routes/auth.routes.js';
+import watchRoutes from './routes/watch.routes.js';
+import feedRoutes from './routes/feed.routes.js';
 
 
 // Middleware
-import { authenticate } from './middleware/auth.middleware';
+import { authenticate } from './middleware/auth.middleware.js';
 
-dotenv.config();
 
 const app = express();
 
