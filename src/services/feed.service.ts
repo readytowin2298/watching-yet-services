@@ -1,4 +1,4 @@
-import { prisma } from '../lib/prisma';
+import { prisma } from '../lib/prisma.js';
 
 export const getFeed = async (userId: string, cursor?: string) => {
     const PAGE_SIZE = 10;
@@ -66,7 +66,7 @@ export const getFeed = async (userId: string, cursor?: string) => {
 
     const nextCursor = posts.length === PAGE_SIZE ? posts[posts.length - 1].id : null;
 
-    const transformedPosts = posts.map((post) => ({
+    const transformedPosts = posts.map((post: any) => ({
         ...post,
         viewerHasLiked: post.reactions.length > 0,
         author: {

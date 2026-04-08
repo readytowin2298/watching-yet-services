@@ -1,17 +1,17 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "Preserve",             // New in TS 6: keeps your imports exactly as written
-    "moduleResolution": "bundler",    // Stops the 'node10' deprecation error
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "outDir": "./dist",
-    "rootDir": "./",
+    "rootDir": "./src",
     "paths": {
       "@generated/*": ["./src/generated/*"]
     }
   },
-  "include": ["../src/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }

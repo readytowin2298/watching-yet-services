@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { handleToggleWatch, getStats } from '../controllers/watch.controller';
-import { authenticate } from '../middleware/auth.middleware';
+import { handleToggleWatch, getStats } from '../controllers/watch.controller.js';
+import { authenticate } from '../middleware/auth.middleware.js';
 
 const router = Router();
 
