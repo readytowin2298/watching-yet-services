@@ -1,5 +1,6 @@
 import { prisma } from "../src/lib/prisma";
 import seedData from "./seedData.json";
+import bcrypt from "bcrypt";
 
 async function main() {
   console.log("🌱 Starting seed...");
@@ -19,7 +20,7 @@ async function main() {
 
   // ─── Users ───────────────────────────────────────────────────────────────
   for (const user of seedData.users) {
-    await prisma.user.create({ data: user });
+    await prisma.user.create({ data: {user, passwordHash: await bcrypt.hash(user.passwordHash, 1) } });
   }
   console.log(`✅ Seeded ${seedData.users.length} users`);
 

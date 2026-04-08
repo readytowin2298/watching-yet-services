@@ -1,4 +1,6 @@
 import { prisma } from '../lib/prisma.js';
+import { ReactionType } from '../generated/client/enums.js';
+
 
 export const getFeed = async (userId: string, cursor?: string) => {
     const PAGE_SIZE = 10;
@@ -6,16 +8,16 @@ export const getFeed = async (userId: string, cursor?: string) => {
     const posts = await prisma.post.findMany({
         where: {
             OR: [
-            { authorId: userId },
-            {
-                author: {
-                watchers: {
-                    some: {
-                    watcherId: userId,
+                { authorId: userId },
+                {
+                    author: {
+                        watchers: {
+                            some: {
+                                watcherId: userId,
+                            },
+                        },
                     },
                 },
-                },
-            },
             ],
         },
         take: PAGE_SIZE,
@@ -28,37 +30,45 @@ export const getFeed = async (userId: string, cursor?: string) => {
         select: {
             id: true,
             content: true,
-            mediaUrl: true,
-            mediaType: true,
             createdAt: true,
+
+            media: {
+                select: {
+                    id: true,
+                    url: true,
+                    thumbnailUrl: true,
+                    type: true,
+                    mimeType: true,
+                    width: true,
+                    height: true,
+                    duration: true,
+                },
+            },
 
             author: {
                 select: {
-                id: true,
-                username: true,
-                avatarUrl: true,
-
-                watchers: {
-                    where: {
-                    watcherId: userId,
+                    id: true,
+                    username: true,
+                    avatarUrl: true,
+                    watchers: {
+                        where: { watcherId: userId },
+                        select: { id: true },
                     },
-                    select: { id: true },
-                },
                 },
             },
 
             reactions: {
                 where: {
-                userId,
-                type: 'LIKE',
+                    userId,
+                    type: ReactionType.LIKE,
                 },
                 select: { id: true },
             },
 
             _count: {
                 select: {
-                reactions: true,
-                comments: true,
+                    reactions: true,
+                    comments: true,
                 },
             },
         },
