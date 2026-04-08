@@ -2,7 +2,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 // Routes
-import authRoutes from './routes/auth.routes';
+import authRoutes from './routes/auth.routes.js';
 import watchRoutes from './routes/watch.routes';
 import feedRoutes from './routes/feed.routes';
 

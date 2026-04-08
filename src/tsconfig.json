@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "CommonJS",
-    "rootDir": "../src",
-    "outDir": "./dist",
+    "target": "ES2022",
+    "module": "Preserve",             // New in TS 6: keeps your imports exactly as written
+    "moduleResolution": "bundler",    // Stops the 'node10' deprecation error
     "strict": true,
-    "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["node"]
-  }
+    "esModuleInterop": true,
+    "outDir": "./dist",
+    "rootDir": "./",
+    "paths": {
+      "@generated/*": ["./src/generated/*"]
+    }
+  },
+  "include": ["../src/**/*"],
+  "exclude": ["node_modules"]
 }

@@ -66,7 +66,7 @@ export const getFeed = async (userId: string, cursor?: string) => {
 
     const nextCursor = posts.length === PAGE_SIZE ? posts[posts.length - 1].id : null;
 
-    const transformedPosts = posts.map(post => ({
+    const transformedPosts = posts.map((post) => ({
         ...post,
         viewerHasLiked: post.reactions.length > 0,
         author: {
