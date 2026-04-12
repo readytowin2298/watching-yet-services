@@ -6,7 +6,7 @@ import { authenticate } from "../middleware/auth.middleware.js";
 const router = Router();
 
 router.post(
-  "/upload",
+  "/",
   authenticate,
   upload.array("media", 5),
   uploadMedia

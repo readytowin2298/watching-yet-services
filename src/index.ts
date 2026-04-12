@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.routes.js';
 import watchRoutes from './routes/watch.routes.js';
 import feedRoutes from './routes/feed.routes.js';
 import uploadRoutes from './routes/upload.routes.js';
+import postRoutes from './routes/post.routes.js';
 
 // Middleware
 import { authenticate } from './middleware/auth.middleware.js';
@@ -18,6 +19,7 @@ app.use('/auth', authRoutes);
 app.use('/watch', watchRoutes);
 app.use('/feed', feedRoutes);
 app.use('/upload', uploadRoutes);
+app.use('/posts', postRoutes);
 
 app.get('/', (req, res) => {
   res.send('Watching Yet API is running 🚀');
