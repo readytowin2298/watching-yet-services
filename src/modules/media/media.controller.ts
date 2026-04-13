@@ -6,7 +6,6 @@ const mediaService = new MediaService();
 export const uploadMedia = async (req: Request, res: Response) => {
   try {
     const files = req.files as Express.Multer.File[];
-    console.log("REQ.USER:", req.user);
     const userId = req.user.id;
 
     if (!files || files.length === 0) {
