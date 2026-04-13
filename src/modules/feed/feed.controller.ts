@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getFeed } from '../services/feed.service.js';
+import { getFeed } from './feed.service.js';
 
 export const  fetchFeed = async ( req: Request, res: Response) => {
     try {

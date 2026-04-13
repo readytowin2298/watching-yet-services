@@ -1,5 +1,5 @@
-import { prisma } from '../lib/prisma.js';
-import { ReactionType } from '../generated/client/enums.js';
+import { prisma } from '../../lib/prisma.js';
+import { ReactionType } from '../../generated/client/enums.js';
 
 
 export const getFeed = async (userId: string, cursor?: string) => {
