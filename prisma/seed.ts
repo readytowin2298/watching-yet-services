@@ -1,107 +1,65 @@
 import { prisma } from "../src/lib/prisma";
-import seedData from "./seedData.json";
+import data from "./seedData.json";
+import bcrypt from "bcrypt";
 
 async function main() {
-  console.log("🌱 Starting seed...");
+  console.log("🌱 Seeding database...");
 
-  // ─── Wipe existing data (order matters for FK constraints) ───────────────
-  await prisma.reaction.deleteMany();
-  await prisma.media.deleteMany();
-  await prisma.message.deleteMany();
-  await prisma.conversationParticipant.deleteMany();
-  await prisma.conversation.deleteMany();
-  await prisma.comment.deleteMany();
-  await prisma.post.deleteMany();
-  await prisma.watch.deleteMany();
-  await prisma.user.deleteMany();
+  // USERS
+  await prisma.user.createMany({
+    data: data.users.map((user: any) => ({ ...user, passwordHash: bcrypt.hashSync(user.passwordHash, 1) })),
+    skipDuplicates: true
+  });
 
-  console.log("🗑️  Cleared existing records.");
+  // WATCH (FOLLOW SYSTEM)
+  await prisma.watch.createMany({
+    data: data.watch,
+    skipDuplicates: true
+  });
 
-  // ─── Users ───────────────────────────────────────────────────────────────
-  for (const user of seedData.users) {
-    await prisma.user.create({ data: user });
-  }
-  console.log(`✅ Seeded ${seedData.users.length} users`);
+  // POSTS
+  await prisma.post.createMany({
+    data: data.posts,
+    skipDuplicates: true
+  });
 
-  // ─── Watches (follow system) ──────────────────────────────────────────────
-  for (const watch of seedData.watches) {
-    await prisma.watch.create({ data: watch });
-  }
-  console.log(`✅ Seeded ${seedData.watches.length} watches`);
+  // COMMENTS
+  await prisma.comment.createMany({
+    data: data.comments,
+    skipDuplicates: true
+  });
 
-  // ─── Posts ────────────────────────────────────────────────────────────────
-  for (const post of seedData.posts) {
-    await prisma.post.create({ data: post });
-  }
-  console.log(`✅ Seeded ${seedData.posts.length} posts`);
+  // REACTIONS
+  await prisma.reaction.createMany({
+    data: data.reactions,
+    skipDuplicates: true
+  });
 
-  // ─── Conversations ────────────────────────────────────────────────────────
-  for (const convo of seedData.conversations) {
-    await prisma.conversation.create({ data: convo });
-  }
-  console.log(`✅ Seeded ${seedData.conversations.length} conversations`);
+  // MEDIA
+  await prisma.media.createMany({
+    data: data.media,
+    skipDuplicates: true
+  });
 
-  // ─── Conversation Participants ────────────────────────────────────────────
-  for (const cp of seedData.conversationParticipants) {
-    await prisma.conversationParticipant.create({
-      data: {
-        ...cp,
-        lastReadAt: cp.lastReadAt ? new Date(cp.lastReadAt) : null,
-      },
-    });
-  }
-  console.log(
-    `✅ Seeded ${seedData.conversationParticipants.length} conversation participants`
-  );
+  // CONVERSATIONS
+  await prisma.conversation.createMany({
+    data: data.conversations,
+    skipDuplicates: true
+  });
 
-  // ─── Messages ─────────────────────────────────────────────────────────────
-  for (const msg of seedData.messages) {
-    await prisma.message.create({ data: msg });
-  }
-  console.log(`✅ Seeded ${seedData.messages.length} messages`);
+  // PARTICIPANTS
+  await prisma.conversationParticipant.createMany({
+    data: data.participants,
+    skipDuplicates: true
+  });
 
-  // ─── Media ────────────────────────────────────────────────────────────────
-  for (const item of seedData.media) {
-    await prisma.media.create({
-      data: {
-        id: item.id,
-        url: item.url,
-        thumbnailUrl: item.thumbnailUrl ?? null,
-        type: item.type as "IMAGE" | "VIDEO",
-        mimeType: item.mimeType,
-        size: item.size,
-        width: item.width ?? null,
-        height: item.height ?? null,
-        duration: item.duration ?? null,
-        postId: item.postId ?? null,
-        messageId: item.messageId ?? null,
-        uploaderId: item.uploaderId,
-      },
-    });
-  }
-  console.log(`✅ Seeded ${seedData.media.length} media items`);
+  // MESSAGES
+  await prisma.message.createMany({
+    data: data.messages,
+    skipDuplicates: true
+  });
 
-  // ─── Comments ─────────────────────────────────────────────────────────────
-  for (const comment of seedData.comments) {
-    await prisma.comment.create({ data: comment });
-  }
-  console.log(`✅ Seeded ${seedData.comments.length} comments`);
-
-  // ─── Reactions ────────────────────────────────────────────────────────────
-  for (const reaction of seedData.reactions) {
-    await prisma.reaction.create({
-      data: {
-        id: reaction.id,
-        userId: reaction.userId,
-        postId: reaction.postId ?? null,
-        commentId: reaction.commentId ?? null,
-        type: reaction.type as "LIKE" | "LOVE" | "LAUGH" | "ANGRY",
-      },
-    });
-  }
-  console.log(`✅ Seeded ${seedData.reactions.length} reactions`);
-
-  console.log("\n🎉 Seed complete!");
+  console.log("✅ Seeding complete!");
 }
 
 main()

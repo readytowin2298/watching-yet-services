@@ -1,276 +1,152 @@
 {
   "users": [
     {
-      "id": "user_01",
-      "username": "aurora_lens",
-      "email": "aurora@example.com",
-      "passwordHash": "$2b$10$examplehashAuroraLens000000000000000000000000000",
-      "bio": "Landscape photographer chasing golden hour 🌅",
-      "avatarUrl": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop"
+      "id": "u1",
+      "username": "david",
+      "email": "david@example.com",
+      "passwordHash": "hashed_pw",
+      "bio": "Builder of WatchingYet",
+      "avatarUrl": "https://images.unsplash.com/photo-1502685104226-ee32379fefbe"
     },
     {
-      "id": "user_02",
-      "username": "dev_marco",
-      "email": "marco@example.com",
-      "passwordHash": "$2b$10$examplehashDevMarco000000000000000000000000000",
-      "bio": "Full-stack dev. TypeScript enthusiast. Coffee addict ☕",
-      "avatarUrl": "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=150&h=150&fit=crop"
+      "id": "u2",
+      "username": "kynsi",
+      "email": "kynsi@example.com",
+      "passwordHash": "hashed_pw",
+      "bio": "Mom & gamer",
+      "avatarUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330"
     },
     {
-      "id": "user_03",
-      "username": "nadia_writes",
-      "email": "nadia@example.com",
-      "passwordHash": "$2b$10$examplehashNadiaWrites00000000000000000000000",
-      "bio": "Words are my medium. Currently working on my second novel.",
-      "avatarUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop"
-    },
-    {
-      "id": "user_04",
-      "username": "tomas_builds",
-      "email": "tomas@example.com",
-      "passwordHash": "$2b$10$examplehashTomasBuilds0000000000000000000000",
-      "bio": "Woodworker & maker. Sawdust is my glitter.",
-      "avatarUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop"
-    },
-    {
-      "id": "user_05",
-      "username": "priya_codes",
-      "email": "priya@example.com",
-      "passwordHash": "$2b$10$examplehashPriyaCodes000000000000000000000000",
-      "bio": "ML engineer. I teach computers to be smarter than me.",
-      "avatarUrl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop"
+      "id": "u3",
+      "username": "ed",
+      "email": "ed@example.com",
+      "passwordHash": "hashed_pw",
+      "bio": "Backend wizard",
+      "avatarUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e"
     }
-  ],
-
-  "watches": [
-    { "id": "watch_01", "watcherId": "user_02", "watchingId": "user_01" },
-    { "id": "watch_02", "watcherId": "user_03", "watchingId": "user_01" },
-    { "id": "watch_03", "watcherId": "user_01", "watchingId": "user_02" },
-    { "id": "watch_04", "watcherId": "user_04", "watchingId": "user_02" },
-    { "id": "watch_05", "watcherId": "user_05", "watchingId": "user_03" },
-    { "id": "watch_06", "watcherId": "user_01", "watchingId": "user_05" }
   ],
 
   "posts": [
     {
-      "id": "post_01",
-      "authorId": "user_01",
-      "content": "Caught this unbelievable sunrise over the lake this morning. Worth waking up at 4am? Absolutely. 📸"
+      "id": "p1",
+      "authorId": "u1",
+      "content": "Building something big 👀"
     },
     {
-      "id": "post_02",
-      "authorId": "user_02",
-      "content": "Just shipped a full auth system with Prisma + Next.js in under 3 hours. The DX on this stack is genuinely excellent. Here's a quick thread on what I learned 🧵"
-    },
-    {
-      "id": "post_03",
-      "authorId": "user_03",
-      "content": "Chapter 12 is finally done. I cried writing it. Not sure if that's a good sign or a terrible one."
-    },
-    {
-      "id": "post_04",
-      "authorId": "user_04",
-      "content": "Finished this walnut side table today. Took three weekends and one catastrophic sanding mistake I refuse to talk about. The legs are mortise and tenon, no hardware."
-    },
-    {
-      "id": "post_05",
-      "authorId": "user_05",
-      "content": "Fine-tuned a small language model on domain-specific data over the weekend. Eval scores went up 18%. Sometimes the boring stuff just works."
-    },
-    {
-      "id": "post_06",
-      "authorId": "user_01",
-      "content": "Golden hour in the mountains hits different when you've hiked 8 miles to get there. Legs: ruined. Photos: worth it."
-    },
-    {
-      "id": "post_07",
-      "authorId": "user_02",
-      "content": "Hot take: most apps don't need Redis. A well-indexed Postgres table and a smarter query will get you 90% of the way there."
-    }
-  ],
-
-  "media": [
-    {
-      "id": "media_01",
-      "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
-      "thumbnailUrl": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400",
-      "type": "IMAGE",
-      "mimeType": "image/jpeg",
-      "size": 1843200,
-      "width": 1200,
-      "height": 800,
-      "duration": null,
-      "postId": "post_01",
-      "messageId": null,
-      "uploaderId": "user_01"
-    },
-    {
-      "id": "media_02",
-      "url": "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=1200",
-      "thumbnailUrl": "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=400",
-      "type": "IMAGE",
-      "mimeType": "image/jpeg",
-      "size": 2150400,
-      "width": 1200,
-      "height": 900,
-      "duration": null,
-      "postId": "post_04",
-      "messageId": null,
-      "uploaderId": "user_04"
-    },
-    {
-      "id": "media_03",
-      "url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200",
-      "thumbnailUrl": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400",
-      "type": "IMAGE",
-      "mimeType": "image/jpeg",
-      "size": 1720000,
-      "width": 1200,
-      "height": 800,
-      "duration": null,
-      "postId": "post_06",
-      "messageId": null,
-      "uploaderId": "user_01"
-    },
-    {
-      "id": "media_04",
-      "url": "https://www.pexels.com/video/3571264/download/",
-      "thumbnailUrl": "https://images.pexels.com/videos/3571264/pictures/preview-0.jpg",
-      "type": "VIDEO",
-      "mimeType": "video/mp4",
-      "size": 15728640,
-      "width": 1920,
-      "height": 1080,
-      "duration": 30,
-      "postId": "post_01",
-      "messageId": null,
-      "uploaderId": "user_01"
-    },
-    {
-      "id": "media_05",
-      "url": "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1200",
-      "thumbnailUrl": "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=400",
-      "type": "IMAGE",
-      "mimeType": "image/jpeg",
-      "size": 980000,
-      "width": 1200,
-      "height": 800,
-      "duration": null,
-      "postId": null,
-      "messageId": "msg_02",
-      "uploaderId": "user_03"
+      "id": "p2",
+      "authorId": "u2",
+      "content": "Carrying my husband in Fortnite again 😂"
     }
   ],
 
   "comments": [
     {
-      "id": "comment_01",
-      "postId": "post_01",
-      "authorId": "user_02",
-      "content": "This is absolutely stunning. What lens did you use for this?"
+      "id": "c1",
+      "postId": "p1",
+      "authorId": "u2",
+      "content": "Let’s gooo 🔥"
     },
     {
-      "id": "comment_02",
-      "postId": "post_01",
-      "authorId": "user_03",
-      "content": "I could write an entire short story starting from this image. Thank you for sharing it."
-    },
-    {
-      "id": "comment_03",
-      "postId": "post_02",
-      "authorId": "user_05",
-      "content": "Agreed on the DX. The Prisma type safety alone saves me from so many bugs. Would love to see your schema if you're open to sharing."
-    },
-    {
-      "id": "comment_04",
-      "postId": "post_03",
-      "authorId": "user_02",
-      "content": "If you cried writing it, we'll probably cry reading it. That's usually the sign of something real."
-    },
-    {
-      "id": "comment_05",
-      "postId": "post_04",
-      "authorId": "user_01",
-      "content": "The grain on that walnut is gorgeous. You should post a close-up of the joints."
-    },
-    {
-      "id": "comment_06",
-      "postId": "post_07",
-      "authorId": "user_05",
-      "content": "Hard agree. I've seen so many teams reach for caching before they even have proper indexes. Profile first, optimise second."
-    },
-    {
-      "id": "comment_07",
-      "postId": "post_05",
-      "authorId": "user_02",
-      "content": "18% is massive. What eval metric were you tracking — BLEU, or something task-specific?"
+      "id": "c2",
+      "postId": "p2",
+      "authorId": "u1",
+      "content": "Facts 😭"
     }
   ],
 
   "reactions": [
-    { "id": "reaction_01", "userId": "user_02", "postId": "post_01", "commentId": null, "type": "LOVE" },
-    { "id": "reaction_02", "userId": "user_03", "postId": "post_01", "commentId": null, "type": "LOVE" },
-    { "id": "reaction_03", "userId": "user_04", "postId": "post_01", "commentId": null, "type": "LIKE" },
-    { "id": "reaction_04", "userId": "user_05", "postId": "post_02", "commentId": null, "type": "LIKE" },
-    { "id": "reaction_05", "userId": "user_01", "postId": "post_02", "commentId": null, "type": "LIKE" },
-    { "id": "reaction_06", "userId": "user_01", "postId": "post_04", "commentId": null, "type": "LOVE" },
-    { "id": "reaction_07", "userId": "user_03", "postId": "post_04", "commentId": null, "type": "LIKE" },
-    { "id": "reaction_08", "userId": "user_01", "postId": null, "commentId": "comment_03", "type": "LIKE" },
-    { "id": "reaction_09", "userId": "user_04", "postId": null, "commentId": "comment_06", "type": "LAUGH" },
-    { "id": "reaction_10", "userId": "user_02", "postId": "post_05", "commentId": null, "type": "LIKE" }
+    {
+      "id": "r1",
+      "userId": "u2",
+      "postId": "p1",
+      "type": "LIKE"
+    },
+    {
+      "id": "r2",
+      "userId": "u1",
+      "postId": "p2",
+      "type": "LAUGH"
+    },
+    {
+      "id": "r3",
+      "userId": "u3",
+      "commentId": "c1",
+      "type": "LOVE"
+    }
+  ],
+
+  "watch": [
+    {
+      "id": "w1",
+      "watcherId": "u1",
+      "watchingId": "u2"
+    },
+    {
+      "id": "w2",
+      "watcherId": "u2",
+      "watchingId": "u1"
+    }
+  ],
+
+  "media": [
+    {
+      "id": "m1",
+      "url": "https://images.unsplash.com/photo-1516117172878-fd2c41f4a759",
+      "thumbnailUrl": null,
+      "type": "IMAGE",
+      "mimeType": "image/jpeg",
+      "size": 500000,
+      "width": 1200,
+      "height": 800,
+      "postId": "p1",
+      "uploaderId": "u1"
+    },
+    {
+      "id": "m2",
+      "url": "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+      "thumbnailUrl": null,
+      "type": "VIDEO",
+      "mimeType": "video/mp4",
+      "size": 2000000,
+      "duration": 5,
+      "postId": "p2",
+      "uploaderId": "u2"
+    }
   ],
 
   "conversations": [
     {
-      "id": "convo_01",
+      "id": "conv1",
       "isGroup": false,
       "title": null
-    },
-    {
-      "id": "convo_02",
-      "isGroup": true,
-      "title": "Dev + Design Crew"
     }
   ],
 
-  "conversationParticipants": [
-    { "id": "cp_01", "conversationId": "convo_01", "userId": "user_01", "lastReadAt": "2024-06-01T10:00:00Z" },
-    { "id": "cp_02", "conversationId": "convo_01", "userId": "user_02", "lastReadAt": "2024-06-01T10:05:00Z" },
-    { "id": "cp_03", "conversationId": "convo_02", "userId": "user_02", "lastReadAt": "2024-06-02T09:00:00Z" },
-    { "id": "cp_04", "conversationId": "convo_02", "userId": "user_04", "lastReadAt": "2024-06-02T09:30:00Z" },
-    { "id": "cp_05", "conversationId": "convo_02", "userId": "user_05", "lastReadAt": null }
+  "participants": [
+    {
+      "id": "cp1",
+      "conversationId": "conv1",
+      "userId": "u1"
+    },
+    {
+      "id": "cp2",
+      "conversationId": "conv1",
+      "userId": "u2"
+    }
   ],
 
   "messages": [
     {
-      "id": "msg_01",
-      "conversationId": "convo_01",
-      "senderId": "user_02",
-      "content": "Hey! Loved your sunrise shot. Do you take commissions for prints?"
+      "id": "msg1",
+      "conversationId": "conv1",
+      "senderId": "u1",
+      "content": "Hey 👋"
     },
     {
-      "id": "msg_02",
-      "conversationId": "convo_01",
-      "senderId": "user_01",
-      "content": "Thank you so much! I do — shoot me your details and I can send over my pricing."
-    },
-    {
-      "id": "msg_03",
-      "conversationId": "convo_02",
-      "senderId": "user_02",
-      "content": "Anyone free for a quick call this week to sync on the API design?"
-    },
-    {
-      "id": "msg_04",
-      "conversationId": "convo_02",
-      "senderId": "user_04",
-      "content": "Thursday works for me after 2pm."
-    },
-    {
-      "id": "msg_05",
-      "conversationId": "convo_02",
-      "senderId": "user_05",
-      "content": "Same — I'll set up a Google Meet. Want to cover auth and media upload endpoints?"
+      "id": "msg2",
+      "conversationId": "conv1",
+      "senderId": "u2",
+      "content": "Hey!"
     }
   ]
 }
