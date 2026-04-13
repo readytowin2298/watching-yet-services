@@ -6,7 +6,7 @@ import authRoutes from './modules/auth/auth.routes.js';
 import watchRoutes from './routes/watch.routes.js';
 import feedRoutes from './modules/feed/feed.routes.js';
 import uploadRoutes from './routes/upload.routes.js';
-import postRoutes from './routes/post.routes.js';
+import postRoutes from './modules/post/post.routes.js';
 
 // Middleware
 import { authenticate } from './middleware/auth.middleware.js';
