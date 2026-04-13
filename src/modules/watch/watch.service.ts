@@ -1,4 +1,4 @@
-import { prisma } from "../lib/prisma.js";
+import { prisma } from "../../lib/prisma.js";
 
 export const toggleWatch = async ( watcherId: string, watchingId: string) => {
     if(watcherId === watchingId) {
