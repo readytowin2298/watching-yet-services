@@ -3,7 +3,7 @@ import 'dotenv/config';  // Must be FIRST
 import express from 'express';
 // Routes
 import authRoutes from './modules/auth/auth.routes.js';
-import watchRoutes from './routes/watch.routes.js';
+import watchRoutes from './modules/watch/watch.routes.js';
 import feedRoutes from './modules/feed/feed.routes.js';
 import uploadRoutes from './routes/upload.routes.js';
 import postRoutes from './modules/post/post.routes.js';

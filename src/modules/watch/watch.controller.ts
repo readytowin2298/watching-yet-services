@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { toggleWatch, getWatchStats } from '../services/watch.service.js';
+import { toggleWatch, getWatchStats } from './watch.service.js';
 
 export const handleToggleWatch = async (req: Request, res: Response) => {
     try{
