@@ -3,3 +3,4 @@
 /generated/prisma
 /extraSeed/**/seedData.json
 /uploads/*
+/src/generated/*

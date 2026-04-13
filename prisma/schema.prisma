@@ -169,6 +169,9 @@ model Reaction {
   post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
   comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
 
+  @@unique([userId, postId])
+  @@unique([userId, commentId])
+
   @@index([postId])
   @@index([commentId])
   @@index([userId])
