@@ -1,7 +1,9 @@
+import 'dotenv/config';  // Must be FIRST
 import {prisma} from "../src/lib/prisma.js";
 import {chatSeed} from "./seedScripts/ChatGpt/chatSeed.js";
 import {claudeSeed} from "./seedScripts/Claude/claudeSeed.js";
 import {geminiSeed} from "./seedScripts/Gemini/geminiSeed.js";
+import fetchTranslation from "./seedScripts/BibleSeed/fetchTranslation.js";
 
 
 async function main(){
@@ -22,6 +24,9 @@ async function main(){
   await chatSeed();
   await claudeSeed();
   await geminiSeed();
+  for(let translation of ['KJV', 'KJVA', 'BSB']){
+    await fetchTranslation(translation);
+  }
 
   console.log("All seeding complete!");
 }
