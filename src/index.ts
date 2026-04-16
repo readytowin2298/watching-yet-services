@@ -9,6 +9,7 @@ import mediaRoutes from './modules/media/media.routes.js';
 import postRoutes from './modules/post/post.routes.js';
 import reactionRoutes from './modules/reaction/reaction.routes.js';
 import commentRoutes from './modules/comments/comment.routes.js';
+import bibleRoutes from './modules/bible/bible.routes.js';
 
 // Middleware
 import { authenticate } from './middleware/auth.middleware.js';
@@ -24,6 +25,7 @@ app.use('/media', mediaRoutes);
 app.use('/post', postRoutes);
 app.use('/reaction', reactionRoutes);
 app.use('/comment', commentRoutes);
+app.use("/bible", bibleRoutes);
 
 app.get('/', (req, res) => {
   res.send('Watching Yet API is running 🚀');
