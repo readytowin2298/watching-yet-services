@@ -230,3 +230,55 @@ model Message {
 
   @@index([conversationId, createdAt])
 }
+
+
+model Translation {
+  id       String    @id @default(cuid())
+  code     String    @unique
+  name     String
+  books    Book[]
+  chapters Chapter[]
+  verses   Verse[]
+}
+
+model Book {
+  id           String      @id @default(cuid())
+  name         String
+  chapterCount Int
+
+  translationCode String
+  translation     Translation @relation(fields: [translationCode], references: [code])
+
+  chapters Chapter[]
+  verses   Verse[]
+}
+
+model Chapter {
+  id         String @id @default(cuid())
+  number     Int
+  verseCount Int
+
+  translationCode String
+  translation     Translation @relation(fields: [translationCode], references: [code])
+
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id])
+
+  verses Verse[]
+}
+
+model Verse {
+  id     String @id @default(cuid())
+  number Int
+  text   String @db.Text
+
+  translationCode String
+  translation     Translation @relation(fields: [translationCode], references: [code])
+
+  bookId String
+  book   Book @relation(fields: [bookId], references: [id])
+
+  chapterNumber Int
+  chapterId     String
+  chapter       Chapter @relation(fields: [chapterId], references: [id])
+}
