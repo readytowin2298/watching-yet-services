@@ -230,3 +230,71 @@ model Message {
 
   @@index([conversationId, createdAt])
 }
+
+
+model Translation {
+  id       String    @id @default(cuid())
+  code     String    @unique
+  name     String
+  books    Book[]
+  chapters Chapter[]
+  verses   Verse[]
+}
+
+model Book {
+  id           String @id @default(cuid())
+  name         String
+  chapterCount Int
+
+  translationCode String
+  translation     Translation @relation(fields: [translationCode], references: [code], onDelete: Cascade)
+
+  chapters Chapter[]
+  verses   Verse[]
+
+  @@index([translationCode])
+  @@unique([translationCode, name])
+}
+
+model Chapter {
+  id         String @id @default(cuid())
+  number     Int
+  verseCount Int
+
+  translationCode String
+  translation     Translation @relation(fields: [translationCode], references: [code], onDelete: Cascade)
+
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  verses Verse[]
+
+  @@index([translationCode])
+  @@index([bookId])
+  @@index([bookId, number])
+
+  @@unique([bookId, number])
+}
+
+model Verse {
+  id     String @id @default(cuid())
+  number Int
+  text   String @db.Text
+
+  translationCode String
+  translation     Translation @relation(fields: [translationCode], references: [code], onDelete: Cascade)
+
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  chapterNumber Int
+  chapterId     String
+  chapter       Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  @@index([translationCode])
+  @@index([chapterId])
+  @@index([chapterId, number])
+  @@index([bookId])
+
+  @@unique([chapterId, number])
+}

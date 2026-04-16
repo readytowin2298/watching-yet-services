@@ -1,0 +1,90 @@
+{
+  "users": [
+    {
+      "id": "user_1",
+      "username": "coder_pro",
+      "email": "dev@example.com",
+      "passwordHash": "$2b$10$YourHashHere",
+      "bio": "Building the future of AI.",
+      "avatarUrl": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200"
+    },
+    {
+      "id": "user_2",
+      "username": "pixel_artist",
+      "email": "art@example.com",
+      "passwordHash": "$2b$10$YourHashHere",
+      "bio": "Digital dreamer and cat lover.",
+      "avatarUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200"
+    },
+    {
+      "id": "user_3",
+      "username": "mountain_hiker",
+      "email": "hike@example.com",
+      "passwordHash": "$2b$10$YourHashHere",
+      "bio": "The mountains are calling.",
+      "avatarUrl": "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=200"
+    }
+  ],
+  "posts": [
+    {
+      "id": "post_1",
+      "authorId": "user_1",
+      "content": "Just finished my first Prisma schema! Feeling like a database wizard."
+    },
+    {
+      "id": "post_2",
+      "authorId": "user_2",
+      "content": "Check out this beautiful sunset I saw today."
+    }
+  ],
+  "media": [
+    {
+      "id": "media_1",
+      "url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b",
+      "type": "IMAGE",
+      "mimeType": "image/jpeg",
+      "size": 102400,
+      "width": 1920,
+      "height": 1080,
+      "uploaderId": "user_2",
+      "postId": "post_2"
+    },
+    {
+      "id": "media_2",
+      "url": "https://www.w3schools.com/html/mov_bbb.mp4",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1485846234645-a62644f84728",
+      "type": "VIDEO",
+      "mimeType": "video/mp4",
+      "size": 500000,
+      "duration": 10,
+      "uploaderId": "user_1",
+      "postId": "post_1"
+    }
+  ],
+  "comments": [
+    {
+      "id": "comm_1",
+      "postId": "post_1",
+      "authorId": "user_2",
+      "content": "Nice job! Prisma is a game changer."
+    }
+  ],
+  "reactions": [
+    { "id": "react_1", "userId": "user_3", "postId": "post_1", "type": "LOVE" },
+    { "id": "react_2", "userId": "user_1", "commentId": "comm_1", "type": "LIKE" }
+  ],
+  "watches": [
+    { "id": "watch_1", "watcherId": "user_1", "watchingId": "user_2" },
+    { "id": "watch_2", "watcherId": "user_2", "watchingId": "user_1" }
+  ],
+  "conversations": [
+    { "id": "conv_1", "isGroup": false }
+  ],
+  "participants": [
+    { "id": "part_1", "conversationId": "conv_1", "userId": "user_1" },
+    { "id": "part_2", "conversationId": "conv_1", "userId": "user_2" }
+  ],
+  "messages": [
+    { "id": "msg_1", "conversationId": "conv_1", "senderId": "user_1", "content": "Hey, did you see my new post?" }
+  ]
+}

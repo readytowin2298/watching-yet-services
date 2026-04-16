@@ -1,8 +1,9 @@
-import { prisma } from "../src/lib/prisma";
+import { prisma } from "../../../src/lib/prisma.js";
+import { ReactionType, MediaType } from "../../../src/generated/client/client.js";
 import data from "./seedData.json";
 import bcrypt from "bcrypt";
 
-async function main() {
+export const chatSeed = async () => {
   console.log("🌱 Seeding database...");
 
   // USERS
@@ -31,13 +32,13 @@ async function main() {
 
   // REACTIONS
   await prisma.reaction.createMany({
-    data: data.reactions,
+    data: data.reactions.map(data => { return {...data, type: data['type'] as ReactionType} }),
     skipDuplicates: true
   });
 
   // MEDIA
   await prisma.media.createMany({
-    data: data.media,
+    data: data.media.map(data => { return {...data, type: data['type'] as MediaType} }),
     skipDuplicates: true
   });
 
@@ -59,14 +60,17 @@ async function main() {
     skipDuplicates: true
   });
 
-  console.log("✅ Seeding complete!");
+  console.log("✅ Chat Seeding complete!");
+  return true;
 }
 
-main()
-  .catch((e) => {
-    console.error("❌ Seed failed:", e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+
+
+// main()
+//   .catch((e) => {
+//     console.error("❌ Seed failed:", e);
+//     process.exit(1);
+//   })
+//   .finally(async () => {
+//     await prisma.$disconnect();
+//   });
