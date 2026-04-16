@@ -1,65 +1,29 @@
-import { prisma } from "../src/lib/prisma";
-import data from "./seedData.json";
-import bcrypt from "bcrypt";
+import {prisma} from "../src/lib/prisma.js";
+import {chatSeed} from "./seedScripts/ChatGpt/chatSeed.js";
+import {claudeSeed} from "./seedScripts/Claude/claudeSeed.js";
+import {geminiSeed} from "./seedScripts/Gemini/geminiSeed.js";
 
-async function main() {
-  console.log("🌱 Seeding database...");
 
-  // USERS
-  await prisma.user.createMany({
-    data: data.users.map((user: any) => ({ ...user, passwordHash: bcrypt.hashSync(user.passwordHash, 1) })),
-    skipDuplicates: true
-  });
+async function main(){
+  // ─── Wipe existing data (order matters for FK constraints) ───────────────
+  await prisma.reaction.deleteMany();
+  await prisma.media.deleteMany();
+  await prisma.message.deleteMany();
+  await prisma.conversationParticipant.deleteMany();
+  await prisma.conversation.deleteMany();
+  await prisma.comment.deleteMany();
+  await prisma.post.deleteMany();
+  await prisma.watch.deleteMany();
+  await prisma.user.deleteMany();
 
-  // WATCH (FOLLOW SYSTEM)
-  await prisma.watch.createMany({
-    data: data.watch,
-    skipDuplicates: true
-  });
+  console.log("🗑️  Cleared existing records.");
+  console.log("Starting seeding process...");
+  
+  await chatSeed();
+  await claudeSeed();
+  await geminiSeed();
 
-  // POSTS
-  await prisma.post.createMany({
-    data: data.posts,
-    skipDuplicates: true
-  });
-
-  // COMMENTS
-  await prisma.comment.createMany({
-    data: data.comments,
-    skipDuplicates: true
-  });
-
-  // REACTIONS
-  await prisma.reaction.createMany({
-    data: data.reactions,
-    skipDuplicates: true
-  });
-
-  // MEDIA
-  await prisma.media.createMany({
-    data: data.media,
-    skipDuplicates: true
-  });
-
-  // CONVERSATIONS
-  await prisma.conversation.createMany({
-    data: data.conversations,
-    skipDuplicates: true
-  });
-
-  // PARTICIPANTS
-  await prisma.conversationParticipant.createMany({
-    data: data.participants,
-    skipDuplicates: true
-  });
-
-  // MESSAGES
-  await prisma.message.createMany({
-    data: data.messages,
-    skipDuplicates: true
-  });
-
-  console.log("✅ Seeding complete!");
+  console.log("All seeding complete!");
 }
 
 main()

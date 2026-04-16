@@ -1,26 +1,13 @@
-import { prisma } from "../src/lib/prisma";
+import { prisma } from "../../../src/lib/prisma.js";
 import seedData from "./seedData.json";
 import bcrypt from "bcrypt";
 
-async function main() {
+export const claudeSeed = async() => {
   console.log("🌱 Starting seed...");
-
-  // ─── Wipe existing data (order matters for FK constraints) ───────────────
-  await prisma.reaction.deleteMany();
-  await prisma.media.deleteMany();
-  await prisma.message.deleteMany();
-  await prisma.conversationParticipant.deleteMany();
-  await prisma.conversation.deleteMany();
-  await prisma.comment.deleteMany();
-  await prisma.post.deleteMany();
-  await prisma.watch.deleteMany();
-  await prisma.user.deleteMany();
-
-  console.log("🗑️  Cleared existing records.");
 
   // ─── Users ───────────────────────────────────────────────────────────────
   for (const user of seedData.users) {
-    await prisma.user.create({ data: {user, passwordHash: await bcrypt.hash(user.passwordHash, 1) } });
+    await prisma.user.create({ data: {...user, passwordHash: await bcrypt.hash(user.passwordHash, 1) } });
   }
   console.log(`✅ Seeded ${seedData.users.length} users`);
 
@@ -100,16 +87,18 @@ async function main() {
       },
     });
   }
-  console.log(`✅ Seeded ${seedData.reactions.length} reactions`);
 
-  console.log("\n🎉 Seed complete!");
+  console.log("\n🎉 Claude Seed complete!");
+
+  return true
 }
 
-main()
-  .catch((e) => {
-    console.error("❌ Seed failed:", e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+
+// main()
+//   .catch((e) => {
+//     console.error("❌ Seed failed:", e);
+//     process.exit(1);
+//   })
+//   .finally(async () => {
+//     await prisma.$disconnect();
+//   });
