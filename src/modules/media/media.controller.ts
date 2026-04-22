@@ -1,22 +1,16 @@
-import { Request, Response } from "express";
+import { Route, Post, Request, FormField } from "tsoa";
 import { MediaService } from "./media.service.js";
 
-const mediaService = new MediaService();
+@Route('/media')
+export class MediaController {
+  private mediaService = new MediaService();
 
-export const uploadMedia = async (req: Request, res: Response) => {
-  try {
-    const files = req.files as Express.Multer.File[];
-    const userId = req.user.id;
-
+  @Post('/upload')
+  async uploadMedia(@FormField() files: Express.Multer.File[], @Request() req: any) {
     if (!files || files.length === 0) {
-      return res.status(400).json({ message: "No files uploaded" });
+      throw new Error("No files uploaded");
     }
 
-    const media = await mediaService.uploadMedia(files, userId);
-
-    res.json(media);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Upload failed" });
+    return await this.mediaService.uploadMedia(files, req.user.id);
   }
-};
+}

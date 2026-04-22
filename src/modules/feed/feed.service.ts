@@ -1,8 +1,8 @@
 import { prisma } from '../../lib/prisma.js';
 import { ReactionType } from '../../generated/client/enums.js';
 
-
-export const getFeed = async (userId: string, cursor?: string) => {
+export class FeedService {
+  async getFeed(userId: string, cursor?: string) {
     const PAGE_SIZE = 10;
 
     const posts = await prisma.post.findMany({
@@ -92,4 +92,5 @@ export const getFeed = async (userId: string, cursor?: string) => {
         posts: transformedPosts,
         nextCursor,
     };
-};
+  }
+}

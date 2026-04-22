@@ -1,6 +1,7 @@
 import { prisma } from "../../lib/prisma.js";
 
-export const toggleReaction = async ({
+export class ReactionService {
+  async toggleReaction({
         userId,
         postId,
         commentId,
@@ -10,7 +11,7 @@ export const toggleReaction = async ({
         postId: string;
         commentId?: string;
         type: "LIKE" | "LOVE" | "LAUGH" | "ANGRY";
-    }) => {
+    }) {
         // Validate input
         if(!postId && !commentId){
             throw new Error("Either postId or commentId must be provided");
@@ -58,3 +59,4 @@ export const toggleReaction = async ({
 
         return { status: "created", reaction: created };
     }
+}

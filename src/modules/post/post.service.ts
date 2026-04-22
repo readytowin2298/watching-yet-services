@@ -1,14 +1,15 @@
 import { prisma } from "../../lib/prisma.js";
 
-export const createPost = async ({
+export class PostService {
+  async createPost({
     content,
     mediaIds,
     userId,
-} : {
+  } : {
     content: string;
     mediaIds?: string[];
     userId: string;
-}) => {
+  }) {
     // Validate media Ids
     if (mediaIds && mediaIds.length > 0) {
         const media = await prisma.media.findMany({
@@ -58,4 +59,5 @@ export const createPost = async ({
     });
 
     return post;
+  }
 }

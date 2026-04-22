@@ -4,3 +4,5 @@
 /extraSeed/**/seedData.json
 /uploads/*
 /src/generated/*
+/src/routes.ts
+/dist/*
