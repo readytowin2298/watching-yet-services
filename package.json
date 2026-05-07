@@ -8,7 +8,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsoa": "tsoa spec-and-routes && fix-tsc-es-imports src/generated/routes/routes.ts",
+    "tsoa": "tsoa spec-and-routes && fix-tsc-es-imports src/routes.ts",
     "build": "npm run tsoa && tsc",
     "dev": "npm run tsoa && tsx watch src/index.ts",
     "seed:bible": "tsx prisma/seedScripts/BibleSeed/seedTranslations.js"
