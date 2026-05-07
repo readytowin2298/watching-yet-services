@@ -12,8 +12,8 @@ if (!process.env.JWT_EXPIRES_IN) {
   throw new Error('JWT_EXPIRES_IN is not defined');
 }
 
-
-export const registerUser = async (username: string, email: string, password: string) => {
+export class AuthService {
+  async registerUser(username: string, email: string, password: string) {
     // Check if user with the same email or username already exists
     const existingUser = await prisma.user.findFirst({ 
         where: { 
@@ -38,9 +38,9 @@ export const registerUser = async (username: string, email: string, password: st
     });
     const { passwordHash, ...safeUser } = user;
     return safeUser;
-};
+  }
 
-export const loginUser = async (email: string, password: string) => {
+  async loginUser(email: string, password: string) {
     // Find the user by email
     const user = await prisma.user.findUnique({ where: { email } });
 
@@ -61,4 +61,5 @@ export const loginUser = async (email: string, password: string) => {
     );
     const { passwordHash, ...safeUser } = user;
     return { safeUser, token };
+  }
 }

@@ -1,23 +1,25 @@
-import { Request, Response } from 'express';
-import {createPost as createPostService} from './post.service.js';
+import { Route, Post, Body, Request } from 'tsoa';
+import { PostService } from './post.service.js';
 
-export const createPost = async (req: Request, res: Response) => {
-    try{
-        const { content, mediaIds } = req.body;
-        const userId = req.user.id;
+interface CreatePostRequest {
+    content: string;
+    mediaIds?: string[];
+}
 
-        if(!content){
-            return res.status(400).json({ message: "Content is required" });
+@Route('/posts')
+export class PostController {
+    private postService = new PostService();
+
+    @Post('/')
+    async createPost(@Body() body: CreatePostRequest, @Request() req: any) {
+        if(!body.content){
+            throw new Error("Content is required");
         }
 
-        const post = await createPostService({
-            content,
-            mediaIds,
-            userId
+        return await this.postService.createPost({
+            content: body.content,
+            mediaIds: body.mediaIds,
+            userId: req.user.id
         });
-
-        res.json(post);
-    } catch (error) {
-        res.status(500).json({ message: "Error creating post" });
     }
 }

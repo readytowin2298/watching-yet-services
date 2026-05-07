@@ -1,27 +1,29 @@
-import { Request, Response } from 'express';
-import { registerUser, loginUser } from './auth.service.js';
+import { Route, Post, Body, Request } from 'tsoa';
+import { AuthService } from './auth.service.js';
 
-export const register = async (req: Request, res: Response) => {
-    try{
-        const { username, email, password } = req.body;
+interface RegisterRequest {
+    username: string;
+    email: string;
+    password: string;
+}
 
-        const user = await registerUser(username, email, password);
+interface LoginRequest {
+    email: string;
+    password: string;
+}
 
-        res.status(201).json(user);
-    } catch(err: any){
-        res.status(400).json({ error: err.message });
+@Route('/auth')
+export class AuthController {
+    private authService = new AuthService();
+
+    @Post('/register')
+    async register(@Body() body: RegisterRequest): Promise<any> {
+        return await this.authService.registerUser(body.username, body.email, body.password);
     }
-};
 
-export const login = async (req: Request, res: Response) => {
-    try {
-        const { email, password } = req.body;
-
-        const result = await loginUser(email, password);
-
-        res.json(result);
-    } catch(err: any) {
-        res.status(401).json({ error: err.message });
+    @Post('/login')
+    async login(@Body() body: LoginRequest): Promise<any> {
+        return await this.authService.loginUser(body.email, body.password);
     }
-};
+}
 

@@ -1,0 +1,24 @@
+{
+  "entryFile": "src/index.ts",
+  "tsconfigFilePath": "tsconfig.json",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/modules/**/*.controller.ts"],
+  "spec": {
+    "outputDirectory": "src/generated",
+    "specVersion": 3,
+    "contact": {
+      "name": "WatchingYet Support"
+    }
+  },
+  "routes": {
+    "outputDirectory": "src/generated/routes",
+    "routesDir": "src",
+    "importGenerationAlgorithm": "js-extension"
+  },
+  "middleware": "express",
+  "basePath": "/api",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}

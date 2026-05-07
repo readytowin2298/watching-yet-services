@@ -1,27 +1,18 @@
-import { Request, Response } from 'express';
-import { toggleWatch, getWatchStats } from './watch.service.js';
+import { Route, Post, Get, Path, Request } from 'tsoa';
+import { WatchService } from './watch.service.js';
 
-export const handleToggleWatch = async (req: Request, res: Response) => {
-    try{
-        const watcherId = (req as any).user.userId;
-        const userId = req.params.userId as string;
+@Route('/watch')
+export class WatchController {
+    private watchService = new WatchService();
 
-        const result = await toggleWatch(watcherId, userId);
-
-        res.json(result);
-    } catch(err: any) {
-        res.status(400).json({ error: err.message})
+    @Post('/:userId')
+    async toggleWatch(@Path() userId: string, @Request() req: any) {
+        const watcherId = req.user.userId;
+        return await this.watchService.toggleWatch(watcherId, userId);
     }
-};
 
-export const getStats = async (req: Request, res: Response) => {
-  try {
-    const userId = req.params.userId as string;
-
-    const stats = await getWatchStats(userId);
-
-    res.json(stats);
-  } catch (err: any) {
-    res.status(400).json({ error: err.message });
-  }
-};
+    @Get('/stats/:userId')
+    async getStats(@Path() userId: string) {
+        return await this.watchService.getWatchStats(userId);
+    }
+}

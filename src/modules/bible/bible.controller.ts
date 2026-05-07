@@ -1,56 +1,46 @@
-import { Request, Response } from "express";
+import { Route, Get, Path, Query } from "tsoa";
 import { BibleService } from "./bible.services.js";
 
-const bibleService = new BibleService();
+@Route('/bible')
+export class BibleController {
+    private bibleService = new BibleService();
 
-export const getTranslations = async (req: Request, res: Response) => {
-    try{
-        const translations = await bibleService.getTranslations();
-        res.status(200).json(translations);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch translations", fullMessage: error });
+    @Get('/translations')
+    async getTranslations() {
+        return await this.bibleService.getTranslations();
     }
-};
 
-export const getBooks = async (req: Request, res: Response) => {
-    try{
-        const { translationCode } = req.params;
+    @Get('/translations/:translationCode')
+    async getBooks(@Path() translationCode: string) {
         if(!translationCode || Array.isArray(translationCode)){
-            return res.status(400).json({ error: "Invalid translation code" });
+            throw new Error("Invalid translation code");
         }
-        const books = await bibleService.getBooks(translationCode);
-        res.status(200).json(books);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch books", fullMessage: error });
+        return await this.bibleService.getBooks(translationCode);
     }
-};
 
-export const getBookDetails = async (req: Request, res: Response) => {
-    try{
-        const { translationCode, bookId } = req.params;
+    @Get('/translations/:translationCode/:bookId')
+    async getBookDetails(@Path() translationCode: string, @Path() bookId: string) {
         if(!translationCode || Array.isArray(translationCode) || !bookId || Array.isArray(bookId)){
-            return res.status(400).json({ error: "Invalid translation code or book ID" });
+            throw new Error("Invalid translation code or book ID");
         }
-        const bookDetails = await bibleService.getBookDetails(translationCode, bookId);
-        res.status(200).json(bookDetails);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch book details", fullMessage: error });
+        return await this.bibleService.getBookDetails(translationCode, bookId);
     }
-};
 
-export const getScriptureRange = async (req: Request, res: Response) => {
-    try{
-        const { translationCode, bookId } = req.params;
-        const { startChapter, startVerse, endChapter, endVerse } = req.query;
+    @Get('/translations/:translationCode/:bookId/scripture')
+    async getScriptureRange(
+        @Path() translationCode: string, 
+        @Path() bookId: string,
+        @Query() startChapter: number,
+        @Query() startVerse: number,
+        @Query() endChapter: number,
+        @Query() endVerse: number
+    ) {
         if(!translationCode || Array.isArray(translationCode) || !bookId || Array.isArray(bookId)){
-            return res.status(400).json({ error: "Invalid translation code or book ID" });
+            throw new Error("Invalid translation code or book ID");
         }
-        if(!startChapter || Array.isArray(startChapter) || !startVerse || Array.isArray(startVerse) || !endChapter || Array.isArray(endChapter) || !endVerse || Array.isArray(endVerse)){
-            return res.status(400).json({ error: "Start and end chapter and verse must be provided as query parameters" });
+        if(!startChapter || !startVerse || !endChapter || !endVerse){
+            throw new Error("Start and end chapter and verse must be provided as query parameters");
         }
-        const scriptureRange = await bibleService.getScriptureRange(translationCode, bookId, Number(startChapter), Number(startVerse), Number(endChapter), Number(endVerse));
-        res.status(200).json(scriptureRange);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch scripture range", fullMessage: error });
+        return await this.bibleService.getScriptureRange(translationCode, bookId, Number(startChapter), Number(startVerse), Number(endChapter), Number(endVerse));
     }
 }

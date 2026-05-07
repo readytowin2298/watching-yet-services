@@ -1,15 +1,13 @@
-import { Request, Response } from 'express';
-import { getFeed } from './feed.service.js';
+import { Route, Get, Query, Request } from 'tsoa';
+import { FeedService } from './feed.service.js';
 
-export const  fetchFeed = async ( req: Request, res: Response) => {
-    try {
-        const userId = (req as any).user.userId;
-        const cursor = req.query.cursor as string | undefined;
+@Route('/feed')
+export class FeedController {
+    private feedService = new FeedService();
 
-        const result = await getFeed(userId, cursor);
-
-        res.json(result)
-    } catch(err: any) {
-        res.status(400).json({error: err.message})
+    @Get('/')
+    async fetchFeed(@Query() cursor?: string, @Request() req?: any) {
+        const userId = req.user?.userId;
+        return await this.feedService.getFeed(userId, cursor);
     }
-};
+}

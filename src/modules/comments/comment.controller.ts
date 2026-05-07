@@ -1,64 +1,43 @@
-import { Request, Response } from "express";
+import { Route, Post, Get, Delete, Path, Body, Request } from "tsoa";
 import { CommentService } from "./comment.service.js";
 
-const commentService = new CommentService();
+interface CreateCommentRequest {
+  postId: string;
+  content?: string;
+}
 
-export const createComment = async (req: Request, res: Response) => {
-  try {
-    const { postId, content } = req.body;
-    const userId = req.user.id;
+@Route('/comments')
+export class CommentController {
+  private commentService = new CommentService();
 
-    if (!postId) {
-      return res.status(400).json({ message: "postId is required" });
+  @Post('/')
+  async createComment(@Body() body: CreateCommentRequest, @Request() req: any) {
+    if (!body.postId) {
+      throw new Error("postId is required");
     }
 
-    const comment = await commentService.createComment({
-      userId,
-      postId,
-      content,
-    });
-
-    res.json(comment);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      message: err instanceof Error ? err.message : "Failed to create comment",
+    return await this.commentService.createComment({
+      userId: req.user.id,
+      postId: body.postId,
+      content: body.content || '',
     });
   }
-};
 
-export const getComments = async (req: Request, res: Response) => {
-  try {
-    const { postId } = req.params;
-    const userId = req.user.id;
-
+  @Get('/:postId')
+  async getComments(@Path() postId: string, @Request() req: any) {
     if (!postId || Array.isArray(postId)) {
-        return res.status(400).json({ message: "Invalid postId" });
+      throw new Error("Invalid postId");
     }
 
-    const comments = await commentService.getPostComments(postId, userId);
-
-    res.json(comments);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to fetch comments" });
+    return await this.commentService.getPostComments(postId, req.user.id);
   }
-};
 
-export const deleteComment = async (req: Request, res: Response) => {
-  try {
-    const { commentId } = req.params;
-    const userId = req.user.id;
-
+  @Delete('/:commentId')
+  async deleteComment(@Path() commentId: string, @Request() req: any) {
     if (!commentId || Array.isArray(commentId)) {
-        return res.status(400).json({ message: "Invalid postId" });
+      throw new Error("Invalid commentId");
     }
 
-    const result = await commentService.deleteComment(commentId, userId);
-
-    res.json(result);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to delete comment" });
+    return await this.commentService.deleteComment(commentId, req.user.id);
   }
-};
+}

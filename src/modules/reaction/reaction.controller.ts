@@ -1,29 +1,27 @@
-import { Request, Response } from "express";
-import { toggleReaction as toggleReactionService } from "./reaction.service.js";
+import { Route, Post, Body, Request } from 'tsoa';
+import { ReactionService } from './reaction.service.js';
 
+interface ToggleReactionRequest {
+    postId?: string;
+    commentId?: string;
+    type: "LIKE" | "LOVE" | "LAUGH" | "ANGRY";
+}
 
-export const toggleReaction = async (req: Request, res: Response) => {
-  try {
-    const { postId, commentId, type } = req.body;
-    const userId = req.user.id;
+@Route('/reactions')
+export class ReactionController {
+    private reactionService = new ReactionService();
 
-    if (!type) {
-      return res.status(400).json({ message: "Reaction type required" });
+    @Post('/toggle')
+    async toggleReaction(@Body() body: ToggleReactionRequest, @Request() req: any) {
+        if (!body.type) {
+            throw new Error("Reaction type required");
+        }
+
+        return await this.reactionService.toggleReaction({
+            userId: req.user.id,
+            postId: body.postId || '',
+            commentId: body.commentId,
+            type: body.type,
+        });
     }
-
-    const result = await toggleReactionService({
-      userId,
-      postId,
-      commentId,
-      type,
-    });
-
-    res.json(result);
-  } catch (err) {
-    console.error(err);
-
-    res.status(500).json({
-      message: err instanceof Error ? err.message : "Failed to toggle reaction",
-    });
-  }
-};
+}

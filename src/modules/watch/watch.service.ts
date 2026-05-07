@@ -1,6 +1,7 @@
 import { prisma } from "../../lib/prisma.js";
 
-export const toggleWatch = async ( watcherId: string, watchingId: string) => {
+export class WatchService {
+  async toggleWatch(watcherId: string, watchingId: string) {
     if(watcherId === watchingId) {
         throw new Error("You cannot watch yourself");
     };
@@ -36,12 +37,13 @@ export const toggleWatch = async ( watcherId: string, watchingId: string) => {
         },
     });
     return { watching: true}
-};
+  }
 
-export const getWatchStats = async (userId: string) => {
+  async getWatchStats(userId: string) {
     const [watchers, watching] = await Promise.all([
         prisma.watch.count({ where: { watchingId: userId }}),
         prisma.watch.count({ where: { watcherId: userId }})
     ]);
     return { watchers, watching };
+  }
 }
