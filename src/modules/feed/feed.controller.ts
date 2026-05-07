@@ -7,7 +7,7 @@ export class FeedController {
 
     @Get('/')
     async fetchFeed(@Query() cursor?: string, @Request() req?: any) {
-        const userId = req.user.userId;
+        const userId = req.user?.userId;
         return await this.feedService.getFeed(userId, cursor);
     }
 }

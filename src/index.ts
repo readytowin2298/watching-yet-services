@@ -4,6 +4,7 @@ import express from 'express';
 import swaggerUI from 'swagger-ui-express';
 import fs from "fs";
 import path from "path";
+import cors from 'cors';
 // // Routes
 // import authRoutes from './modules/auth/auth.routes.js';
 // import watchRoutes from './modules/watch/watch.routes.js';
@@ -26,6 +27,7 @@ const app = express();
 
 
 app.use(express.json());
+app.use(cors());
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 RegisterRoutes(app);
 // app.use('/auth', authRoutes);
